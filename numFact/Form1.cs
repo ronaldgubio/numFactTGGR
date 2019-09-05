@@ -274,7 +274,15 @@ namespace numFact
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pixelDAO.Prueba();
+            try
+            {
+                pixelDAO.Prueba();
+                MessageBox.Show("CORRECTO");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
