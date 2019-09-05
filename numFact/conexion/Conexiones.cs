@@ -13,7 +13,7 @@ namespace numFact.conexion
         public OdbcConnection GetOdbcConnectionPixel()
         {
             OdbcConnection cn;
-            cn = new OdbcConnection("dsn=conexion-pixel-rplaza;UID=dba;PWD=banana1;CHARSET=UTF-8");
+            cn = new OdbcConnection("dsn=PixelSQLBase;UID=dba;PWD=banana1;CHARSET=UTF-8");
             cn.Open();
             return cn;
         }
