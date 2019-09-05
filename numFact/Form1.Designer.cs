@@ -49,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonCerrar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVentas)).BeginInit();
             this.panelOculto.SuspendLayout();
@@ -224,6 +225,7 @@
             // 
             // panelOculto
             // 
+            this.panelOculto.Controls.Add(this.button1);
             this.panelOculto.Controls.Add(this.textBoxTransaccionCodigo);
             this.panelOculto.Controls.Add(this.buttonProcesarTransaccionFE);
             this.panelOculto.Controls.Add(this.buttonProvisional);
@@ -269,6 +271,16 @@
             this.buttonCerrar.Text = "X";
             this.buttonCerrar.UseVisualStyleBackColor = true;
             this.buttonCerrar.Click += new System.EventHandler(this.buttonCerrar_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(120, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "tablas";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // Form1
             // 
@@ -320,6 +332,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonCerrar;
+        private System.Windows.Forms.Button button1;
     }
 }
 

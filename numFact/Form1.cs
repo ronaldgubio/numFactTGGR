@@ -271,5 +271,10 @@ namespace numFact
         {
             System.Windows.Forms.Application.Exit();
         }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            pixelDAO.Prueba();
+        }
     }
 }

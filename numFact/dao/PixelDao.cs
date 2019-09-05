@@ -16,6 +16,474 @@ namespace numFact.dao
     {
         private Conexiones conexiones;
 
+
+        private const String SQL_POSHEADER_SELECT = @"
+select  
+TRANSACT, 
+TABLENUM, 
+TIMESTART, 
+TIMEEND, 
+NUMCUST, 
+TAX1, 
+TAX2, 
+TAX3, 
+TAX4, 
+TAX5, 
+TAX1ABLE, 
+TAX2ABLE, 
+TAX3ABLE, 
+TAX4ABLE, 
+TAX5ABLE, 
+NETTOTAL, 
+WHOSTART, 
+WHOCLOSE, 
+ISSPLIT, 
+SALETYPEINDEX, 
+EXP, 
+WAITINGAUTH, 
+STATNUM, 
+STATUS, 
+FINALTOTAL, 
+STORENUM, 
+PUNCHINDEX, 
+GRATUITY, 
+OPENDATE, 
+MEMCODE, 
+TOTALPOINTS, 
+POINTSAPPLIED, 
+UPDATESTATUS, 
+ISDELIVERY, 
+SCHEDULEDATE, 
+TAX1EXEMPT, 
+TAX2EXEMPT, 
+TAX3EXEMPT, 
+TAX4EXEMPT, 
+TAX5EXEMPT, 
+MEMRATE, 
+MEALTIME, 
+ISINTERNET, 
+REVCENTER, 
+PUNCHIDXSTART, 
+STATNUMSTART, 
+SECNUM, 
+GRATAMOUNT, 
+SHIPTO, 
+ENFORCEDGRAT, 
+NUMPRINTEDFINAL, 
+REFID, 
+RSTORDNUM, 
+SNUM
+from DBA.POSHEADER aa where aa.opendate=?";
+
+        private const String SQL_POSHEADER_INSERT = @"
+INSERT INTO PIXEL_POSHEADER (
+TRANSACT, 
+TABLENUM, 
+TIMESTART, 
+TIMEEND, 
+NUMCUST, 
+TAX1, 
+TAX2, 
+TAX3, 
+TAX4, 
+TAX5, 
+TAX1ABLE, 
+TAX2ABLE, 
+TAX3ABLE, 
+TAX4ABLE, 
+TAX5ABLE, 
+NETTOTAL, 
+WHOSTART, 
+WHOCLOSE, 
+ISSPLIT, 
+SALETYPEINDEX, 
+EXP, 
+WAITINGAUTH, 
+STATNUM, 
+STATUS, 
+FINALTOTAL, 
+STORENUM, 
+PUNCHINDEX, 
+GRATUITY, 
+OPENDATE, 
+MEMCODE, 
+TOTALPOINTS, 
+POINTSAPPLIED, 
+UPDATESTATUS, 
+ISDELIVERY, 
+SCHEDULEDATE, 
+TAX1EXEMPT, 
+TAX2EXEMPT, 
+TAX3EXEMPT, 
+TAX4EXEMPT, 
+TAX5EXEMPT, 
+MEMRATE, 
+MEALTIME, 
+ISINTERNET, 
+REVCENTER, 
+PUNCHIDXSTART, 
+STATNUMSTART, 
+SECNUM, 
+GRATAMOUNT, 
+SHIPTO, 
+ENFORCEDGRAT, 
+NUMPRINTEDFINAL, 
+REFID, 
+RSTORDNUM, 
+SNUM) 
+VALUES ( 
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19,
+:20,:21,:22,:23,:24,
+:25,:26,:27,:28,:29,
+:30,:31,:32,:33,:34,
+:35,:36,:37,:38,:39,
+:40,:41,:42,:43,:44,
+:45,:46,:47,:48,:49,
+:50,:51,:52,:53
+)";
+
+        private const String SQL_POSDETAIL_SELECT = @"
+SELECT
+UNIQUEID, 
+TRANSACT, 
+PRODNUM, 
+WHOORDER, 
+WHOAUTH, 
+COSTEACH, 
+QUAN, 
+TIMEORD, 
+PRINTLOC, 
+SEATNUM, 
+MINUTES, 
+NOTAX, 
+HOWORDERED, 
+STATUS, 
+NEXTPOS, 
+PRIORPOS, 
+RECPOS, 
+PRODTYPE, 
+APPLYTAX1, 
+APPLYTAX2, 
+APPLYTAX3, 
+APPLYTAX4, 
+APPLYTAX5, 
+REDUCEINVENTORY, 
+STORENUM, 
+STATNUM, 
+RECIPECOSTEACH, 
+OPENDATE, 
+MEALTIME, 
+LINEDES, 
+REVCENTER, 
+MASTERITEM, 
+QUESTIONID, 
+ORIGCOSTEACH, 
+NETCOSTEACH, 
+DISCOUNT, 
+UPDATESTATUS, 
+GRATEXEMPT, 
+AUTHCODE, 
+SNUM FROM DBA.POSDETAIL WHERE OPENDATE=?";
+
+        private const String SQL_POSDETAIL_INSERT = @"
+INSERT INTO PIXEL_POSDETAIL (
+UNIQUEID, 
+TRANSACT, 
+PRODNUM, 
+WHOORDER, 
+WHOAUTH, 
+COSTEACH, 
+QUAN, 
+TIMEORD, 
+PRINTLOC, 
+SEATNUM, 
+MINUTES, 
+NOTAX, 
+HOWORDERED, 
+STATUS, 
+NEXTPOS, 
+PRIORPOS, 
+RECPOS, 
+PRODTYPE, 
+APPLYTAX1, 
+APPLYTAX2, 
+APPLYTAX3, 
+APPLYTAX4, 
+APPLYTAX5, 
+REDUCEINVENTORY, 
+STORENUM, 
+STATNUM, 
+RECIPECOSTEACH, 
+OPENDATE, 
+MEALTIME, 
+LINEDES, 
+REVCENTER, 
+MASTERITEM, 
+QUESTIONID, 
+ORIGCOSTEACH, 
+NETCOSTEACH, 
+DISCOUNT, 
+UPDATESTATUS, 
+GRATEXEMPT, 
+AUTHCODE, 
+SNUM) 
+VALUES (
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19,
+:20,:21,:22,:23,:24,
+:25,:26,:27,:28,:29,
+:30,:31,:32,:33,:34,
+:35,:36,:37,:38,:39
+)";
+
+
+        private const String SQL_HOWPAID_INSERT = @"
+INSERT INTO PIXEL_HOWPAID (
+HOWPAIDLINK, 
+TRANSDATE, 
+EMPNUM, 
+TENDER, 
+METHODNUM, 
+CHANGE, 
+AUTHORIZED, 
+AUTHCODE, 
+MEMCODE, 
+EXCHANGERATE, 
+TRANSACT, 
+PAYTYPE, 
+OPENDATE, 
+PUNCHINDEX, 
+UPDATESTATUS, 
+SETTLED, 
+STATUS, 
+APPROVED, 
+SNUM, 
+STATNUM, 
+ISPAYINOUT, 
+PAYREASON, 
+MEALTIME, 
+REVCENTER, 
+VOIDED, 
+VOIDEDLINK, 
+LCUDIFF, 
+ENFORCEDGRAT, 
+GRATAMOUNT) 
+VALUES (
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19,
+:20,:21,:22,:23,:24,
+:25,:26,:27,:28
+)";
+
+        private const String SQL_HOWPAID_SELECT = @"
+SELECT 
+HOWPAIDLINK, 
+TRANSDATE, 
+EMPNUM, 
+TENDER, 
+METHODNUM, 
+CHANGE, 
+AUTHORIZED, 
+AUTHCODE, 
+MEMCODE, 
+EXCHANGERATE, 
+TRANSACT, 
+PAYTYPE, 
+OPENDATE, 
+PUNCHINDEX, 
+UPDATESTATUS, 
+SETTLED, 
+STATUS, 
+APPROVED, 
+SNUM, 
+STATNUM, 
+ISPAYINOUT, 
+PAYREASON, 
+MEALTIME, 
+REVCENTER, 
+VOIDED, 
+VOIDEDLINK, 
+LCUDIFF, 
+ENFORCEDGRAT, 
+GRATAMOUNT
+FROM DBA.HOWPAID WHERE OPENDATE=?";
+
+
+        private const String SQL_POSBANK_INSERT = @"INSERT INTO PIXEL_POSBANK (
+UNIQUEID, 
+PUNCHINDEX, 
+METHODNUM, 
+CALCTENDERED, 
+EXCHANGERATE, 
+DATEENTERED, 
+ENTRYTYPE, 
+UPDATESTATUS, 
+SNUM, 
+REFCODE, 
+OPENDATE, 
+WHOAUTH, 
+PLINK, 
+REASONID, 
+SAFENUM, 
+FLOATNUM, 
+DENOMNUM, 
+WASPROCESSED, 
+ISACTIVE, 
+STATNUM, 
+MEMCODE) 
+VALUES ( 
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19,
+:20
+)";
+
+        private const String SQL_POSBANK_SELECT = @"select
+UNIQUEID, 
+PUNCHINDEX, 
+METHODNUM, 
+CALCTENDERED, 
+EXCHANGERATE, 
+DATEENTERED, 
+ENTRYTYPE, 
+UPDATESTATUS, 
+SNUM, 
+REFCODE, 
+OPENDATE, 
+WHOAUTH, 
+PLINK, 
+REASONID, 
+SAFENUM, 
+FLOATNUM, 
+DENOMNUM, 
+WASPROCESSED, 
+ISACTIVE, 
+STATNUM, 
+MEMCODE
+from DBA.POSBANK where opendate=?";
+
+        private const String SQL_CASHOUT_INSERT = @"
+INSERT INTO PIXEL_CASHOUT (
+CASHOUTNUM, 
+EMPNUM, 
+PUNCHINDEX, 
+OPENDATE, 
+""UId"", 
+WHOENTERED, 
+DATEENTERED, 
+WHOPROCESSED, 
+DATEPROCESSED, 
+TOTALAMOUNT, 
+TOTALTIP, 
+TOTALSURCHG, 
+TOTALCASHDUE, 
+TOTALPOSTENDER, 
+TOTALFLOATS, 
+TOTALPAYINS, 
+TOTALPAYOUTS, 
+TOTALPICKUPS, 
+ISTIPPAIDOUT, 
+OVERSHORT, 
+REASON, 
+ISACTIVE, 
+UPDATESTATUS, 
+SNUM) 
+VALUES(
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19,
+:20,:21,:22,:23
+)";
+
+        private const String SQL_CASHOUT_SELECT = @"select
+CASHOUTNUM, 
+EMPNUM, 
+PUNCHINDEX, 
+OPENDATE, 
+UId, 
+WHOENTERED, 
+DATEENTERED, 
+WHOPROCESSED, 
+DATEPROCESSED, 
+TOTALAMOUNT, 
+TOTALTIP, 
+TOTALSURCHG, 
+TOTALCASHDUE, 
+TOTALPOSTENDER, 
+TOTALFLOATS, 
+TOTALPAYINS, 
+TOTALPAYOUTS, 
+TOTALPICKUPS, 
+ISTIPPAIDOUT, 
+OVERSHORT, 
+REASON, 
+ISACTIVE, 
+UPDATESTATUS, 
+SNUM
+from DBA.CASHOUT where opendate=?";
+
+        private const String SQL_CASHOUTDETAIL_INSERT = @"
+INSERT INTO PIXEL_CASHOUTDETAIL (
+CASHOUTDETAILNUM, 
+CASHOUTNUM, 
+METHODNUM, 
+NOOFITEMS, 
+EXCHANGE, 
+AMOUNT, 
+CALCTENDER, 
+OVERSHORT, 
+WHOPROCESSED, 
+DATEENTERED, 
+DATEPROCESSED, 
+ISCURRENCY, 
+SHOWCALCTENDER, 
+TENDERSETTLEMENT, 
+HASDENOMS, 
+ISEFT, 
+ADJUSTCASHNUM, 
+ISACTIVE, 
+UPDATESTATUS, 
+SNUM) 
+VALUES ( 
+:0,:1,:2,:3,:4,
+:5,:6,:7,:8,:9,
+:10,:11,:12,:13,:14,
+:15,:16,:17,:18,:19
+)";
+
+
+        private const String SQL_CASHOUTDETAIL_SELECT = @"select
+CASHOUTDETAILNUM, 
+CASHOUTNUM, 
+METHODNUM, 
+NOOFITEMS, 
+EXCHANGE, 
+AMOUNT, 
+CALCTENDER, 
+OVERSHORT, 
+WHOPROCESSED, 
+DATEENTERED, 
+DATEPROCESSED, 
+ISCURRENCY, 
+SHOWCALCTENDER, 
+TENDERSETTLEMENT, 
+HASDENOMS, 
+ISEFT, 
+ADJUSTCASHNUM, 
+ISACTIVE, 
+UPDATESTATUS, 
+SNUM
+from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout aa where aa.opendate=?)";
+
         public PixelDao()
         {
             conexiones = new Conexiones();
@@ -133,15 +601,26 @@ namespace numFact.dao
         {
             OdbcConnection conPixel = null;
             OdbcTransaction tranPixel = null;
+            OdbcConnection conOracle = null;
+            OdbcTransaction tranOracle = null;
             try
             {
                 //OdbcConnection conBI = conexiones.getOdbcConnectionBI();
+
+                //Abro la conexión a Pixel
+                conOracle = conexiones.GetOdbcConnectionORA();
+
+                //Inicio la transacción
+                tranOracle = conOracle.BeginTransaction();
 
                 //Abro la conexión a Pixel
                 conPixel = conexiones.GetOdbcConnectionPixel();
 
                 //Inicio la transacción
                 tranPixel = conPixel.BeginTransaction();
+
+                //llamo al proceso de copia de información entre bases de datos Pixel y Oracle
+                CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
 
                 //llamo el procedimiento 1
                 OdbcCommand comandoPixel1 = new OdbcCommand("{call dba.ACK_LTG_VENTAS_PAGOS(?)}", conPixel);
@@ -157,14 +636,373 @@ namespace numFact.dao
                 comandoPixel2.ExecuteNonQuery();
 
                 //confirmo la transacción
+                //confirmo la transacción
 
                 conexiones.CommitAndCloseTransaction(tranPixel);
+                conexiones.CommitAndCloseTransaction(tranOracle);
             }
             catch (Exception ex)
             {
                 conexiones.RollbackAndCloseTransaction(tranPixel);
+                conexiones.RollbackAndCloseTransaction(tranOracle);
                 throw ex;
             }
+        }
+
+
+
+        public void Prueba()
+        {
+            String idTabla = "20190902";
+            OdbcConnection conPixel = null;
+            OdbcTransaction tranPixel = null;
+            OdbcConnection conOracle = null;
+            OdbcTransaction tranOracle = null;
+            try
+            {
+                //OdbcConnection conBI = conexiones.getOdbcConnectionBI();
+
+                //Abro la conexión a Pixel
+                conOracle = conexiones.GetOdbcConnectionORA();
+
+                //Inicio la transacción
+                tranOracle = conOracle.BeginTransaction();
+
+                //Abro la conexión a Pixel
+                conPixel = conexiones.GetOdbcConnectionPixel();
+
+                //Inicio la transacción
+                tranPixel = conPixel.BeginTransaction();
+
+                //llamo al proceso de copia de información entre bases de datos Pixel y Oracle
+                CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
+
+                conexiones.CommitAndCloseTransaction(tranPixel);
+                conexiones.CommitAndCloseTransaction(tranOracle);
+            }
+            catch (Exception ex)
+            {
+                conexiones.RollbackAndCloseTransaction(tranPixel);
+                conexiones.RollbackAndCloseTransaction(tranOracle);
+                throw ex;
+            }
+        }
+
+        private void CopiarInformacionParaQLikSense(String idTabla, OdbcConnection conPixel, OdbcTransaction tranPixel, OdbcConnection conOracle, OdbcTransaction tranOracle)
+        {
+            /********************************POSHEADER****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel1 = new OdbcCommand(SQL_POSHEADER_SELECT, conPixel);
+            comandoPixel1.Transaction = tranPixel;
+            comandoPixel1.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel1 = comandoPixel1.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle1 = new OdbcCommand(SQL_POSHEADER_INSERT, conOracle);
+            comandoOracle1.Transaction = tranOracle;
+            if (dataReaderPixel1.HasRows)
+            {
+                while (dataReaderPixel1.Read())
+                {
+                    comandoOracle1.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel1.GetValue(0));
+                    comandoOracle1.Parameters.AddWithValue(":0", dataReaderPixel1.GetValue(0));
+                    comandoOracle1.Parameters.AddWithValue(":1", dataReaderPixel1.GetValue(1));
+                    comandoOracle1.Parameters.AddWithValue(":2", dataReaderPixel1.GetValue(2));
+                    comandoOracle1.Parameters.AddWithValue(":3", dataReaderPixel1.GetValue(3));
+                    comandoOracle1.Parameters.AddWithValue(":4", dataReaderPixel1.GetValue(4));
+                    comandoOracle1.Parameters.AddWithValue(":5", dataReaderPixel1.GetValue(5));
+                    comandoOracle1.Parameters.AddWithValue(":6", dataReaderPixel1.GetValue(6));
+                    comandoOracle1.Parameters.AddWithValue(":7", dataReaderPixel1.GetValue(7));
+                    comandoOracle1.Parameters.AddWithValue(":8", dataReaderPixel1.GetValue(8));
+                    comandoOracle1.Parameters.AddWithValue(":9", dataReaderPixel1.GetValue(9));
+                    comandoOracle1.Parameters.AddWithValue(":10", dataReaderPixel1.GetValue(10));
+                    comandoOracle1.Parameters.AddWithValue(":11", dataReaderPixel1.GetValue(11));
+                    comandoOracle1.Parameters.AddWithValue(":12", dataReaderPixel1.GetValue(12));
+                    comandoOracle1.Parameters.AddWithValue(":13", dataReaderPixel1.GetValue(13));
+                    comandoOracle1.Parameters.AddWithValue(":14", dataReaderPixel1.GetValue(14));
+                    comandoOracle1.Parameters.AddWithValue(":15", dataReaderPixel1.GetValue(15));
+                    comandoOracle1.Parameters.AddWithValue(":16", dataReaderPixel1.GetValue(16));
+                    comandoOracle1.Parameters.AddWithValue(":17", dataReaderPixel1.GetValue(17));
+                    comandoOracle1.Parameters.AddWithValue(":18", dataReaderPixel1.GetValue(18));
+                    comandoOracle1.Parameters.AddWithValue(":19", dataReaderPixel1.GetValue(19));
+                    comandoOracle1.Parameters.AddWithValue(":20", dataReaderPixel1.GetValue(20));
+                    comandoOracle1.Parameters.AddWithValue(":21", dataReaderPixel1.GetValue(21));
+                    comandoOracle1.Parameters.AddWithValue(":22", dataReaderPixel1.GetValue(22));
+                    comandoOracle1.Parameters.AddWithValue(":23", dataReaderPixel1.GetValue(23));
+                    comandoOracle1.Parameters.AddWithValue(":24", dataReaderPixel1.GetValue(24));
+                    comandoOracle1.Parameters.AddWithValue(":25", dataReaderPixel1.GetValue(25));
+                    comandoOracle1.Parameters.AddWithValue(":26", dataReaderPixel1.GetValue(26));
+                    comandoOracle1.Parameters.AddWithValue(":27", dataReaderPixel1.GetValue(27));
+                    comandoOracle1.Parameters.AddWithValue(":28", dataReaderPixel1.GetValue(28));
+                    comandoOracle1.Parameters.AddWithValue(":29", dataReaderPixel1.GetValue(29));
+                    comandoOracle1.Parameters.AddWithValue(":30", dataReaderPixel1.GetValue(30));
+                    comandoOracle1.Parameters.AddWithValue(":31", dataReaderPixel1.GetValue(31));
+                    comandoOracle1.Parameters.AddWithValue(":32", dataReaderPixel1.GetValue(32));
+                    comandoOracle1.Parameters.AddWithValue(":33", dataReaderPixel1.GetValue(33));
+                    comandoOracle1.Parameters.AddWithValue(":34", dataReaderPixel1.GetValue(34));
+                    comandoOracle1.Parameters.AddWithValue(":35", dataReaderPixel1.GetValue(35));
+                    comandoOracle1.Parameters.AddWithValue(":36", dataReaderPixel1.GetValue(36));
+                    comandoOracle1.Parameters.AddWithValue(":37", dataReaderPixel1.GetValue(37));
+                    comandoOracle1.Parameters.AddWithValue(":38", dataReaderPixel1.GetValue(38));
+                    comandoOracle1.Parameters.AddWithValue(":39", dataReaderPixel1.GetValue(39));
+                    comandoOracle1.Parameters.AddWithValue(":40", dataReaderPixel1.GetValue(40));
+                    comandoOracle1.Parameters.AddWithValue(":41", dataReaderPixel1.GetValue(41));
+                    comandoOracle1.Parameters.AddWithValue(":42", dataReaderPixel1.GetValue(42));
+                    comandoOracle1.Parameters.AddWithValue(":43", dataReaderPixel1.GetValue(43));
+                    comandoOracle1.Parameters.AddWithValue(":44", dataReaderPixel1.GetValue(44));
+                    comandoOracle1.Parameters.AddWithValue(":45", dataReaderPixel1.GetValue(45));
+                    comandoOracle1.Parameters.AddWithValue(":46", dataReaderPixel1.GetValue(46));
+                    comandoOracle1.Parameters.AddWithValue(":47", dataReaderPixel1.GetValue(47));
+                    comandoOracle1.Parameters.AddWithValue(":48", dataReaderPixel1.GetValue(48));
+                    comandoOracle1.Parameters.AddWithValue(":49", dataReaderPixel1.GetValue(49));
+                    comandoOracle1.Parameters.AddWithValue(":50", dataReaderPixel1.GetValue(50));
+                    comandoOracle1.Parameters.AddWithValue(":51", dataReaderPixel1.GetValue(51));
+                    comandoOracle1.Parameters.AddWithValue(":52", dataReaderPixel1.GetValue(52));
+                    comandoOracle1.Parameters.AddWithValue(":53", dataReaderPixel1.GetValue(53));
+                    comandoOracle1.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel1.Close();
+
+            /********************************POSDETAIL****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel2 = new OdbcCommand(SQL_POSDETAIL_SELECT, conPixel);
+            comandoPixel2.Transaction = tranPixel;
+            comandoPixel2.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel2 = comandoPixel2.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle2 = new OdbcCommand(SQL_POSDETAIL_INSERT, conOracle);
+            comandoOracle2.Transaction = tranOracle;
+            if (dataReaderPixel2.HasRows)
+            {
+                while (dataReaderPixel2.Read())
+                {
+                    comandoOracle2.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel2.GetValue(0));
+                    comandoOracle2.Parameters.AddWithValue(":0", dataReaderPixel2.GetValue(0));
+                    comandoOracle2.Parameters.AddWithValue(":1", dataReaderPixel2.GetValue(1));
+                    comandoOracle2.Parameters.AddWithValue(":2", dataReaderPixel2.GetValue(2));
+                    comandoOracle2.Parameters.AddWithValue(":3", dataReaderPixel2.GetValue(3));
+                    comandoOracle2.Parameters.AddWithValue(":4", dataReaderPixel2.GetValue(4));
+                    comandoOracle2.Parameters.AddWithValue(":5", dataReaderPixel2.GetValue(5));
+                    comandoOracle2.Parameters.AddWithValue(":6", dataReaderPixel2.GetValue(6));
+                    comandoOracle2.Parameters.AddWithValue(":7", dataReaderPixel2.GetValue(7));
+                    comandoOracle2.Parameters.AddWithValue(":8", dataReaderPixel2.GetValue(8));
+                    comandoOracle2.Parameters.AddWithValue(":9", dataReaderPixel2.GetValue(9));
+                    comandoOracle2.Parameters.AddWithValue(":10", dataReaderPixel2.GetValue(10));
+                    comandoOracle2.Parameters.AddWithValue(":11", dataReaderPixel2.GetValue(11));
+                    comandoOracle2.Parameters.AddWithValue(":12", dataReaderPixel2.GetValue(12));
+                    comandoOracle2.Parameters.AddWithValue(":13", dataReaderPixel2.GetValue(13));
+                    comandoOracle2.Parameters.AddWithValue(":14", dataReaderPixel2.GetValue(14));
+                    comandoOracle2.Parameters.AddWithValue(":15", dataReaderPixel2.GetValue(15));
+                    comandoOracle2.Parameters.AddWithValue(":16", dataReaderPixel2.GetValue(16));
+                    comandoOracle2.Parameters.AddWithValue(":17", dataReaderPixel2.GetValue(17));
+                    comandoOracle2.Parameters.AddWithValue(":18", dataReaderPixel2.GetValue(18));
+                    comandoOracle2.Parameters.AddWithValue(":19", dataReaderPixel2.GetValue(19));
+                    comandoOracle2.Parameters.AddWithValue(":20", dataReaderPixel2.GetValue(20));
+                    comandoOracle2.Parameters.AddWithValue(":21", dataReaderPixel2.GetValue(21));
+                    comandoOracle2.Parameters.AddWithValue(":22", dataReaderPixel2.GetValue(22));
+                    comandoOracle2.Parameters.AddWithValue(":23", dataReaderPixel2.GetValue(23));
+                    comandoOracle2.Parameters.AddWithValue(":24", dataReaderPixel2.GetValue(24));
+                    comandoOracle2.Parameters.AddWithValue(":25", dataReaderPixel2.GetValue(25));
+                    comandoOracle2.Parameters.AddWithValue(":26", dataReaderPixel2.GetValue(26));
+                    comandoOracle2.Parameters.AddWithValue(":27", dataReaderPixel2.GetValue(27));
+                    comandoOracle2.Parameters.AddWithValue(":28", dataReaderPixel2.GetValue(28));
+                    comandoOracle2.Parameters.AddWithValue(":29", dataReaderPixel2.GetValue(29));
+                    comandoOracle2.Parameters.AddWithValue(":30", dataReaderPixel2.GetValue(30));
+                    comandoOracle2.Parameters.AddWithValue(":31", dataReaderPixel2.GetValue(31));
+                    comandoOracle2.Parameters.AddWithValue(":32", dataReaderPixel2.GetValue(32));
+                    comandoOracle2.Parameters.AddWithValue(":33", dataReaderPixel2.GetValue(33));
+                    comandoOracle2.Parameters.AddWithValue(":34", dataReaderPixel2.GetValue(34));
+                    comandoOracle2.Parameters.AddWithValue(":35", dataReaderPixel2.GetValue(35));
+                    comandoOracle2.Parameters.AddWithValue(":36", dataReaderPixel2.GetValue(36));
+                    comandoOracle2.Parameters.AddWithValue(":37", dataReaderPixel2.GetValue(37));
+                    comandoOracle2.Parameters.AddWithValue(":38", dataReaderPixel2.GetValue(38));
+                    comandoOracle2.Parameters.AddWithValue(":39", dataReaderPixel2.GetValue(39));
+                    comandoOracle2.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel2.Close();
+
+            /********************************HOWPAID****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel3 = new OdbcCommand(SQL_HOWPAID_SELECT, conPixel);
+            comandoPixel3.Transaction = tranPixel;
+            comandoPixel3.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel3 = comandoPixel3.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle3 = new OdbcCommand(SQL_HOWPAID_INSERT, conOracle);
+            comandoOracle3.Transaction = tranOracle;
+            if (dataReaderPixel3.HasRows)
+            {
+                while (dataReaderPixel3.Read())
+                {
+                    comandoOracle3.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel3.GetValue(0));
+                    comandoOracle3.Parameters.AddWithValue(":0", dataReaderPixel3.GetValue(0));
+                    comandoOracle3.Parameters.AddWithValue(":1", dataReaderPixel3.GetValue(1));
+                    comandoOracle3.Parameters.AddWithValue(":2", dataReaderPixel3.GetValue(2));
+                    comandoOracle3.Parameters.AddWithValue(":3", dataReaderPixel3.GetValue(3));
+                    comandoOracle3.Parameters.AddWithValue(":4", dataReaderPixel3.GetValue(4));
+                    comandoOracle3.Parameters.AddWithValue(":5", dataReaderPixel3.GetValue(5));
+                    comandoOracle3.Parameters.AddWithValue(":6", dataReaderPixel3.GetValue(6));
+                    comandoOracle3.Parameters.AddWithValue(":7", dataReaderPixel3.GetValue(7));
+                    comandoOracle3.Parameters.AddWithValue(":8", dataReaderPixel3.GetValue(8));
+                    comandoOracle3.Parameters.AddWithValue(":9", dataReaderPixel3.GetValue(9));
+                    comandoOracle3.Parameters.AddWithValue(":10", dataReaderPixel3.GetValue(10));
+                    comandoOracle3.Parameters.AddWithValue(":11", dataReaderPixel3.GetValue(11));
+                    comandoOracle3.Parameters.AddWithValue(":12", dataReaderPixel3.GetValue(12));
+                    comandoOracle3.Parameters.AddWithValue(":13", dataReaderPixel3.GetValue(13));
+                    comandoOracle3.Parameters.AddWithValue(":14", dataReaderPixel3.GetValue(14));
+                    comandoOracle3.Parameters.AddWithValue(":15", dataReaderPixel3.GetValue(15));
+                    comandoOracle3.Parameters.AddWithValue(":16", dataReaderPixel3.GetValue(16));
+                    comandoOracle3.Parameters.AddWithValue(":17", dataReaderPixel3.GetValue(17));
+                    comandoOracle3.Parameters.AddWithValue(":18", dataReaderPixel3.GetValue(18));
+                    comandoOracle3.Parameters.AddWithValue(":19", dataReaderPixel3.GetValue(19));
+                    comandoOracle3.Parameters.AddWithValue(":20", dataReaderPixel3.GetValue(20));
+                    comandoOracle3.Parameters.AddWithValue(":21", dataReaderPixel3.GetValue(21));
+                    comandoOracle3.Parameters.AddWithValue(":22", dataReaderPixel3.GetValue(22));
+                    comandoOracle3.Parameters.AddWithValue(":23", dataReaderPixel3.GetValue(23));
+                    comandoOracle3.Parameters.AddWithValue(":24", dataReaderPixel3.GetValue(24));
+                    comandoOracle3.Parameters.AddWithValue(":25", dataReaderPixel3.GetValue(25));
+                    comandoOracle3.Parameters.AddWithValue(":26", dataReaderPixel3.GetValue(26));
+                    comandoOracle3.Parameters.AddWithValue(":27", dataReaderPixel3.GetValue(27));
+                    comandoOracle3.Parameters.AddWithValue(":28", dataReaderPixel3.GetValue(28));
+                    comandoOracle3.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel3.Close();
+
+            /********************************POSBANK****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel4 = new OdbcCommand(SQL_POSBANK_SELECT, conPixel);
+            comandoPixel4.Transaction = tranPixel;
+            comandoPixel4.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel4 = comandoPixel4.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle4 = new OdbcCommand(SQL_POSBANK_INSERT, conOracle);
+            comandoOracle4.Transaction = tranOracle;
+            if (dataReaderPixel4.HasRows)
+            {
+                while (dataReaderPixel4.Read())
+                {
+                    comandoOracle4.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel4.GetValue(0));
+                    comandoOracle4.Parameters.AddWithValue(":0", dataReaderPixel4.GetValue(0));
+                    comandoOracle4.Parameters.AddWithValue(":1", dataReaderPixel4.GetValue(1));
+                    comandoOracle4.Parameters.AddWithValue(":2", dataReaderPixel4.GetValue(2));
+                    comandoOracle4.Parameters.AddWithValue(":3", dataReaderPixel4.GetValue(3));
+                    comandoOracle4.Parameters.AddWithValue(":4", dataReaderPixel4.GetValue(4));
+                    comandoOracle4.Parameters.AddWithValue(":5", dataReaderPixel4.GetValue(5));
+                    comandoOracle4.Parameters.AddWithValue(":6", dataReaderPixel4.GetValue(6));
+                    comandoOracle4.Parameters.AddWithValue(":7", dataReaderPixel4.GetValue(7));
+                    comandoOracle4.Parameters.AddWithValue(":8", dataReaderPixel4.GetValue(8));
+                    comandoOracle4.Parameters.AddWithValue(":9", dataReaderPixel4.GetValue(9));
+                    comandoOracle4.Parameters.AddWithValue(":10", dataReaderPixel4.GetValue(10));
+                    comandoOracle4.Parameters.AddWithValue(":11", dataReaderPixel4.GetValue(11));
+                    comandoOracle4.Parameters.AddWithValue(":12", dataReaderPixel4.GetValue(12));
+                    comandoOracle4.Parameters.AddWithValue(":13", dataReaderPixel4.GetValue(13));
+                    comandoOracle4.Parameters.AddWithValue(":14", dataReaderPixel4.GetValue(14));
+                    comandoOracle4.Parameters.AddWithValue(":15", dataReaderPixel4.GetValue(15));
+                    comandoOracle4.Parameters.AddWithValue(":16", dataReaderPixel4.GetValue(16));
+                    comandoOracle4.Parameters.AddWithValue(":17", dataReaderPixel4.GetValue(17));
+                    comandoOracle4.Parameters.AddWithValue(":18", dataReaderPixel4.GetValue(18));
+                    comandoOracle4.Parameters.AddWithValue(":19", dataReaderPixel4.GetValue(19));
+                    comandoOracle4.Parameters.AddWithValue(":20", dataReaderPixel4.GetValue(20));
+                    comandoOracle4.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel4.Close();
+
+            /********************************CASHOUT****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel5 = new OdbcCommand(SQL_CASHOUT_SELECT, conPixel);
+            comandoPixel5.Transaction = tranPixel;
+            comandoPixel5.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel5 = comandoPixel5.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle5 = new OdbcCommand(SQL_CASHOUT_INSERT, conOracle);
+            comandoOracle5.Transaction = tranOracle;
+            if (dataReaderPixel5.HasRows)
+            {
+                while (dataReaderPixel5.Read())
+                {
+                    comandoOracle5.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel5.GetValue(0));
+                    comandoOracle5.Parameters.AddWithValue(":0", dataReaderPixel5.GetValue(0));
+                    comandoOracle5.Parameters.AddWithValue(":1", dataReaderPixel5.GetValue(1));
+                    comandoOracle5.Parameters.AddWithValue(":2", dataReaderPixel5.GetValue(2));
+                    comandoOracle5.Parameters.AddWithValue(":3", dataReaderPixel5.GetValue(3));
+                    comandoOracle5.Parameters.AddWithValue(":4", dataReaderPixel5.GetValue(4));
+                    comandoOracle5.Parameters.AddWithValue(":5", dataReaderPixel5.GetValue(5));
+                    comandoOracle5.Parameters.AddWithValue(":6", dataReaderPixel5.GetValue(6));
+                    comandoOracle5.Parameters.AddWithValue(":7", dataReaderPixel5.GetValue(7));
+                    comandoOracle5.Parameters.AddWithValue(":8", dataReaderPixel5.GetValue(8));
+                    comandoOracle5.Parameters.AddWithValue(":9", dataReaderPixel5.GetValue(9));
+                    comandoOracle5.Parameters.AddWithValue(":10", dataReaderPixel5.GetValue(10));
+                    comandoOracle5.Parameters.AddWithValue(":11", dataReaderPixel5.GetValue(11));
+                    comandoOracle5.Parameters.AddWithValue(":12", dataReaderPixel5.GetValue(12));
+                    comandoOracle5.Parameters.AddWithValue(":13", dataReaderPixel5.GetValue(13));
+                    comandoOracle5.Parameters.AddWithValue(":14", dataReaderPixel5.GetValue(14));
+                    comandoOracle5.Parameters.AddWithValue(":15", dataReaderPixel5.GetValue(15));
+                    comandoOracle5.Parameters.AddWithValue(":16", dataReaderPixel5.GetValue(16));
+                    comandoOracle5.Parameters.AddWithValue(":17", dataReaderPixel5.GetValue(17));
+                    comandoOracle5.Parameters.AddWithValue(":18", dataReaderPixel5.GetValue(18));
+                    comandoOracle5.Parameters.AddWithValue(":19", dataReaderPixel5.GetValue(19));
+                    comandoOracle5.Parameters.AddWithValue(":20", dataReaderPixel5.GetValue(20));
+                    comandoOracle5.Parameters.AddWithValue(":21", dataReaderPixel5.GetValue(21));
+                    comandoOracle5.Parameters.AddWithValue(":22", dataReaderPixel5.GetValue(22));
+                    comandoOracle5.Parameters.AddWithValue(":23", dataReaderPixel5.GetValue(23));
+                    comandoOracle5.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel5.Close();
+
+            /********************************CASHOUTDETAIL****************************************/
+            //lectura de tablas e inserción entre bases de datos
+            OdbcCommand comandoPixel6 = new OdbcCommand(SQL_CASHOUTDETAIL_SELECT, conPixel);
+            comandoPixel6.Transaction = tranPixel;
+            comandoPixel6.Parameters.AddWithValue("@idTabla", idTabla);
+            OdbcDataReader dataReaderPixel6 = comandoPixel6.ExecuteReader();
+
+            //lectura en Pixel, inserción oracle
+            OdbcCommand comandoOracle6 = new OdbcCommand(SQL_CASHOUTDETAIL_INSERT, conOracle);
+            comandoOracle6.Transaction = tranOracle;
+            if (dataReaderPixel6.HasRows)
+            {
+                while (dataReaderPixel6.Read())
+                {
+                    comandoOracle6.Parameters.Clear();
+                    Console.WriteLine(dataReaderPixel6.GetValue(0));
+                    comandoOracle6.Parameters.AddWithValue(":0", dataReaderPixel6.GetValue(0));
+                    comandoOracle6.Parameters.AddWithValue(":1", dataReaderPixel6.GetValue(1));
+                    comandoOracle6.Parameters.AddWithValue(":2", dataReaderPixel6.GetValue(2));
+                    comandoOracle6.Parameters.AddWithValue(":3", dataReaderPixel6.GetValue(3));
+                    comandoOracle6.Parameters.AddWithValue(":4", dataReaderPixel6.GetValue(4));
+                    comandoOracle6.Parameters.AddWithValue(":5", dataReaderPixel6.GetValue(5));
+                    comandoOracle6.Parameters.AddWithValue(":6", dataReaderPixel6.GetValue(6));
+                    comandoOracle6.Parameters.AddWithValue(":7", dataReaderPixel6.GetValue(7));
+                    comandoOracle6.Parameters.AddWithValue(":8", dataReaderPixel6.GetValue(8));
+                    comandoOracle6.Parameters.AddWithValue(":9", dataReaderPixel6.GetValue(9));
+                    comandoOracle6.Parameters.AddWithValue(":10", dataReaderPixel6.GetValue(10));
+                    comandoOracle6.Parameters.AddWithValue(":11", dataReaderPixel6.GetValue(11));
+                    comandoOracle6.Parameters.AddWithValue(":12", dataReaderPixel6.GetValue(12));
+                    comandoOracle6.Parameters.AddWithValue(":13", dataReaderPixel6.GetValue(13));
+                    comandoOracle6.Parameters.AddWithValue(":14", dataReaderPixel6.GetValue(14));
+                    comandoOracle6.Parameters.AddWithValue(":15", dataReaderPixel6.GetValue(15));
+                    comandoOracle6.Parameters.AddWithValue(":16", dataReaderPixel6.GetValue(16));
+                    comandoOracle6.Parameters.AddWithValue(":17", dataReaderPixel6.GetValue(17));
+                    comandoOracle6.Parameters.AddWithValue(":18", dataReaderPixel6.GetValue(18));
+                    comandoOracle6.Parameters.AddWithValue(":19", dataReaderPixel6.GetValue(19));
+                    comandoOracle6.ExecuteNonQuery();
+                }
+            }
+            dataReaderPixel6.Close();
         }
 
         public decimal DescuentoFaltanteGetTotal(string openDate)
@@ -1004,7 +1842,7 @@ namespace numFact.dao
                 //********************************************inicio del paso 3*********************************************
                 //trabajo en procesos de asignación de descuentos sobre la BI
 
-            
+
                 foreach (Descuento tmpDes in descuentos)
                 {
                     OdbcCommand comandoBi1 = new OdbcCommand("INSERT INTO pixel_cxc_ltg(cxc_id, cxc_cedula, cxc_nombre,cxc_almacen,cxc_opendate,cxc_valor, cxc_tipo) VALUES((select coalesce(max(aa1.cxc_id),0)+1 from pixel_cxc_ltg aa1), ?, ?, ?,?,?,?)", conBI);
