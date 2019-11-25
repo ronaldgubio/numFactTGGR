@@ -172,7 +172,7 @@ namespace numFact
 
             //si el total de descuento es mayor a 0 se procede con la signación de descuentos, caso
             //contrario se sigue el flujo normal
-            if (valorTotalDescuento > 0)
+            if (valorTotalDescuento > new Decimal(0.01))
             {
                 AsignacionDescuento asignacionDescuento = new AsignacionDescuento(idTabla, valorTotalDescuento);
                 asignacionDescuento.ShowDialog(this);
@@ -283,6 +283,16 @@ namespace numFact
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -46,10 +46,10 @@
             this.buttonProcesarTransaccionFE = new System.Windows.Forms.Button();
             this.textBoxTransaccionCodigo = new System.Windows.Forms.TextBox();
             this.panelOculto = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonCerrar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVentas)).BeginInit();
             this.panelOculto.SuspendLayout();
@@ -235,6 +235,16 @@
             this.panelOculto.TabIndex = 18;
             this.panelOculto.Visible = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(120, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "tablas";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -246,6 +256,7 @@
             this.label3.Size = new System.Drawing.Size(410, 24);
             this.label3.TabIndex = 19;
             this.label3.Text = "Procesamiento de información LTG V 3.0.2";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // panel2
             // 
@@ -257,6 +268,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(802, 56);
             this.panel2.TabIndex = 20;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // buttonCerrar
             // 
@@ -271,16 +283,6 @@
             this.buttonCerrar.Text = "X";
             this.buttonCerrar.UseVisualStyleBackColor = true;
             this.buttonCerrar.Click += new System.EventHandler(this.buttonCerrar_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(120, 81);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(61, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "tablas";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // Form1
             // 
