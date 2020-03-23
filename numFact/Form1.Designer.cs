@@ -255,7 +255,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(410, 24);
             this.label3.TabIndex = 19;
-            this.label3.Text = "Procesamiento de información LTG V 3.0.2";
+            this.label3.Text = "Procesamiento de información LTG V 3.0.3";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // panel2
