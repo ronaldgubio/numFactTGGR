@@ -601,17 +601,17 @@ from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout
         {
             OdbcConnection conPixel = null;
             OdbcTransaction tranPixel = null;
-            OdbcConnection conOracle = null;
-            OdbcTransaction tranOracle = null;
+            //OdbcConnection conOracle = null;
+            //OdbcTransaction tranOracle = null;
             try
             {
                 //OdbcConnection conBI = conexiones.getOdbcConnectionBI();
 
                 //Abro la conexión a Pixel
-                conOracle = conexiones.GetOdbcConnectionORA();
+                //conOracle = conexiones.GetOdbcConnectionORA();
 
                 //Inicio la transacción
-                tranOracle = conOracle.BeginTransaction();
+                //tranOracle = conOracle.BeginTransaction();
 
                 //Abro la conexión a Pixel
                 conPixel = conexiones.GetOdbcConnectionPixel();
@@ -620,7 +620,7 @@ from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout
                 tranPixel = conPixel.BeginTransaction();
 
                 //llamo al proceso de copia de información entre bases de datos Pixel y Oracle
-                CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
+                //CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
 
                 //llamo el procedimiento 1
                 OdbcCommand comandoPixel1 = new OdbcCommand("{call dba.ACK_LTG_VENTAS_PAGOS(?)}", conPixel);
@@ -639,12 +639,12 @@ from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout
                 //confirmo la transacción
 
                 conexiones.CommitAndCloseTransaction(tranPixel);
-                conexiones.CommitAndCloseTransaction(tranOracle);
+                //conexiones.CommitAndCloseTransaction(tranOracle);
             }
             catch (Exception ex)
             {
                 conexiones.RollbackAndCloseTransaction(tranPixel);
-                conexiones.RollbackAndCloseTransaction(tranOracle);
+                //conexiones.RollbackAndCloseTransaction(tranOracle);
                 throw ex;
             }
         }
@@ -656,17 +656,17 @@ from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout
             String idTabla = "20190902";
             OdbcConnection conPixel = null;
             OdbcTransaction tranPixel = null;
-            OdbcConnection conOracle = null;
-            OdbcTransaction tranOracle = null;
+            //OdbcConnection conOracle = null;
+            //OdbcTransaction tranOracle = null;
             try
             {
                 //OdbcConnection conBI = conexiones.getOdbcConnectionBI();
 
                 //Abro la conexión a Pixel
-                conOracle = conexiones.GetOdbcConnectionORA();
+                //conOracle = conexiones.GetOdbcConnectionORA();
 
                 //Inicio la transacción
-                tranOracle = conOracle.BeginTransaction();
+                //tranOracle = conOracle.BeginTransaction();
 
                 //Abro la conexión a Pixel
                 conPixel = conexiones.GetOdbcConnectionPixel();
@@ -675,15 +675,15 @@ from DBA.CASHOUTDETAIL where cashoutnum in(select aa.cashoutnum from DBA.cashout
                 tranPixel = conPixel.BeginTransaction();
 
                 //llamo al proceso de copia de información entre bases de datos Pixel y Oracle
-                CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
+                //CopiarInformacionParaQLikSense(idTabla, conPixel, tranPixel, conOracle, tranOracle);
 
                 conexiones.CommitAndCloseTransaction(tranPixel);
-                conexiones.CommitAndCloseTransaction(tranOracle);
+                //conexiones.CommitAndCloseTransaction(tranOracle);
             }
             catch (Exception ex)
             {
                 conexiones.RollbackAndCloseTransaction(tranPixel);
-                conexiones.RollbackAndCloseTransaction(tranOracle);
+                //conexiones.RollbackAndCloseTransaction(tranOracle);
                 throw ex;
             }
         }
