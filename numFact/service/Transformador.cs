@@ -19,7 +19,7 @@ namespace numFact.service
             {
                 ELiminarArchivosTemporales();
                 GenerarArchivosXMLDesdeLista(facturasObject);
-                CopiarArchivosTemporalesLocalmente();
+                //CopiarArchivosTemporalesLocalmente();
                 CopiarArchivosTemporalesRemotamente();
             }
             catch (Exception ex)
@@ -84,6 +84,13 @@ namespace numFact.service
                 string[] sourcefiles = Directory.GetFiles(ConfigurationManager.AppSettings["DireccionTemporal"].ToString());
 
                 foreach (string sourcefile in sourcefiles)
+                {
+                    File.Delete(sourcefile);
+                }
+
+                string[] sourcefiles1 = Directory.GetFiles(ConfigurationManager.AppSettings["DireccionLocal"].ToString());
+
+                foreach (string sourcefile in sourcefiles1)
                 {
                     File.Delete(sourcefile);
                 }

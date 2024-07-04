@@ -52,7 +52,7 @@ namespace numFact.dto
         {
             public String fechaEmision { get; set; }
             public String dirEstablecimiento { get; set; }
-            public String contribuyenteEspecial { get; set; }
+            //public String contribuyenteEspecial { get; set; }
             public String obligadoContabilidad { get; set; }
             public String tipoIdentificacionComprador { get; set; }
             public String guiaRemision { get; set; }

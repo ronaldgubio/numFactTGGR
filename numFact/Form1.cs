@@ -216,7 +216,7 @@ namespace numFact
         {
             try
             {
-                pixelDAO.ProvisionalEjecutarProcesoFE();
+                //pixelDAO.ProvisionalEjecutarProcesoFE();
                 MessageBox.Show("correcto");
             }
             catch (Exception ex)
